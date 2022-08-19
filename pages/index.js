@@ -8,8 +8,10 @@ import {
 	CardMedia,
 	Typography,
 	Button,
-	Link,
+	TextField,
+	IconButton,
 } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import { useState, useEffect } from 'react';
 
 const defaultEndpoint = 'https://rickandmortyapi.com/api/character/';
@@ -66,6 +68,20 @@ export default function Home({ data }) {
 		});
 	}
 
+	function handleOnSubmitSearch(e) {
+		e.preventDefault();
+		const { currentTarget = {} } = e;
+		const fields = Array.from(currentTarget?.elements);
+		const fieldQuery = fields.find((field) => field.name === 'query');
+
+		const value = fieldQuery.value || '';
+		const endpoint = `${defaultEndpoint}?name=${value}`;
+
+		updatePage({
+			current: `${defaultEndpoint}?name=${value}`,
+		});
+	}
+
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -80,6 +96,22 @@ export default function Home({ data }) {
 				<p className={styles.description}>
 					Character wiki for the Rick and Morty series.
 				</p>
+
+				<form style={{ display: 'flex' }} onSubmit={handleOnSubmitSearch}>
+					<TextField
+						name='query'
+						type='search'
+						id='search-bar'
+						className='text'
+						label='Search for character'
+						variant='outlined'
+						placeholder='Search for character.'
+						size='medium'
+					/>
+					<IconButton type='submit' size='medium' aria-label='search'>
+						<SearchIcon size='medium' style={{ fill: 'blue' }} />
+					</IconButton>
+				</form>
 
 				<div className={styles.grid}>
 					{results.map((result) => (
@@ -97,7 +129,7 @@ export default function Home({ data }) {
 								/>
 								<CardContent>
 									<Typography variant='body2' color='text.secondary'>
-										<b>Name: {result.name}</b>
+										<b>{result.name}</b>
 									</Typography>
 								</CardContent>
 							</CardActionArea>
@@ -115,10 +147,7 @@ export default function Home({ data }) {
 					target='_blank'
 					rel='noopener noreferrer'
 				>
-					Powered by{' '}
-					<span className={styles.logo}>
-						<Image src='/vercel.svg' alt='Vercel Logo' width={72} height={16} />
-					</span>
+					Rick & Morty Wiki
 				</a>
 			</footer>
 		</div>
