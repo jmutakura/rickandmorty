@@ -53,9 +53,8 @@ export default function Home({ data }) {
 			updateResults((prev) => {
 				return [...prev, ...nextData.results];
 			});
-
-			request();
 		}
+		request();
 	}, [current]);
 
 	function handleLoadMore() {
@@ -104,10 +103,10 @@ export default function Home({ data }) {
 							</CardActionArea>
 						</Card>
 					))}
-					<Button onClick={handleLoadMore} variant='outlined'>
-						Load More
-					</Button>
 				</div>
+				<Button onClick={handleLoadMore} variant='outlined'>
+					Load More
+				</Button>
 			</main>
 
 			<footer className={styles.footer}>
