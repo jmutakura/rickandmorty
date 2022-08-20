@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 const defaultEndpoint = 'https://rickandmortyapi.com/api/character/';
 
@@ -120,19 +121,21 @@ export default function Home({ data }) {
 							sx={{ maxWidth: 345 }}
 							className={styles.card}
 						>
-							<CardActionArea href=''>
-								<CardMedia
-									component='img'
-									height='250'
-									image={result.image}
-									alt={`${result.name} image`}
-								/>
-								<CardContent>
-									<Typography variant='body2' color='text.secondary'>
-										<b>{result.name}</b>
-									</Typography>
-								</CardContent>
-							</CardActionArea>
+							<Link href={`/character/${result.id}`}>
+								<CardActionArea href=''>
+									<CardMedia
+										component='img'
+										height='250'
+										image={result.image}
+										alt={`${result.name} image`}
+									/>
+									<CardContent>
+										<Typography variant='body2' color='text.secondary'>
+											<b>{result.name}</b>
+										</Typography>
+									</CardContent>
+								</CardActionArea>
+							</Link>
 						</Card>
 					))}
 				</div>
